@@ -1,0 +1,97 @@
+tensor([[    0,     0, 31091,  4301, 12156,    12, 28062,  1342,  2088, 26400,
+         12986, 31684,  1258,    16,    10,  5808, 13719,  1403,    12,  2611,
+          1342,  2088,  1546,    13, 29698,  6492,     4,    85, 15178,  3443,
+         25206, 24176, 33183,   417,  1033,     6,   147,   349,  6880, 33183,
+         11303,    16, 14092,    30, 29002,    10,   333,     9,  3919,  1542,
+         33183, 11303, 44493,     4,    20,  1049,   724,     9,   208,  8105,
+            29,    16,     7,   146,    10, 16300,  6492,    15,     5,   220,
+          6880,    10,  3018,   189,    28,  2509,    11,    30,  4481,     5,
+          1049, 13931,     9, 34326,  1964,     4,     2]])
+Lightweight Self-Attentive Sequential Recommendation is a novel lightweight self-attentive network for sequential recommendation. It leverages compositional embeddings, where each item embedding is composed by merging a group of selected base embedding vectors. The main goal of SRSs is to make a proactive recommendation on the next item a user may be interested in by mining the main sequence of interacted items.
+tensor([[    0,   170, 15393, 13719,  1403,    12,  2611,  1342,  2088,  1546,
+            36, 10463,  1889,   238,    10,  5808,  2472,     7,  3783,    12,
+         24645, 29698,  6492,     4, 29881,  1889, 11907, 19999,     5,  6880,
+         33183, 11303, 36173,    19,  1542, 33183, 11303,  7821, 45940,     6,
+           349,     9,    61,  6308, 12246,  4163, 33183, 11303, 44493,    36,
+           118,     4,   242,   482,  1542, 33183,   417,  1033,    43,    87,
+             5,   746,  1280,     9,  1964,     4, 12499,    13,   349,  3018,
+            32, 15430, 36550,    15,     5, 25156,  3018,    12, 36907,  3707,
+         16838,  1386,     9,    69,    73, 12724,   773, 11043,     4,     2]])
+We propose lightweight self-attentive network (LSAN), a novel solution to memory-efficient sequential recommendation. LSAN aggressively replaces the item embedding matrix with base embedding matrices, each of which contains substantially fewer embedding vectors (i.e., base embeddings) than the total amount of items. Results for each user are purely conditioned on the static user-itemaffinity instead of her/his interest dynamics.
+tensor([[    0,   970,    32,   430, 21092,     9,  1542, 33183,   417,  1033,
+            13,   349,  6880,     4,   598,  6210,    14,   349,  6880,  9524,
+            10, 11693,  4069,     6,    52,  5753,     7,     5, 39809,  4843,
+            12,  5593,  1851,  3624,  7610,   646,  2631,   742,    14,   473,
+            45,  6581,   943,  1532,   868, 17294,     4,  7299, 42166,   352,
+             6,    10, 16681,  6880,    64,    28,  2773,  4829,    30,    41,
+         12547, 19470,  1258,     6,   215,    25,  7510,    12, 10715,     4,
+             2]])
+There are different combinations of base embeddings for each item. To guarantee that each item receives a distinct combination, we resort to the quotient-remainder trick [ 34] that does not introduce additional learnable parameters. Intuitively, a unified item can be easily formed by an ensemble operation, such as element-wise.
+tensor([[    0,   133,  1503,  2408,    16,   172,   341,     7, 37357,     5,
+         25206, 24176, 33183, 11303,    13,    41,  6880,     4,    20, 33183,
+         11303, 36173,    16, 11236,    30, 16721, 16722, 39650,    70, 25206,
+         24176,  6880, 33183,   417,  1033,     4,    20, 15380, 23794,  6084,
+            16,   780,  1720,    13,   720,     8,   400, 16953, 26471,     4,
+           166,   304,    10, 13719,  1732,     9, 15380, 23794,     7,  1888,
+             5,   346,     9, 17294,   956,     4,     2]])
+The attention weight is then used to compute the compositional embedding for an item. The embedding matrix is constructed by sequentially stacking all compositional item embeddings. The convolution branch is specialised for global and local preferences modelling. We use a lightweight version of convolution to reduce the number of parameters needed.
+tensor([[    0,   170,  2883, 15491,    15,   237, 10266,    12,  6199, 22485,
+             4,    20,   414,    32,  4786,    31,  1645,     8, 29730,  6173,
+             4,   166,   304,   130, 42532,    13,    84, 15491,   420,   954,
+             4,   166,    78, 11526,     5,   819,     9, 29881,  1889,    30,
+         12818,    24,    19,   194,    12,  1116,    12,   627,    12,  2013,
+         29698,  5940,   268,     4,   572,    14,     6,    52,   617,  4830,
+             5,   913,     9,     5,   762,  6411,     8,  8944, 46669, 20413,
+            11, 29881,  1889,     4,     2]])
+We conduct experiments on four commonly-used benchmarks. The data are collected from Amazon and Yelp reviews. We use three datasets for our experiments across 2019. We first analyze the performance of LSAN by comparing it with state-of-the-art sequential recommenders. After that, we further investigate the impact of the key components and hyperparameters in LSAN.
+tensor([[    0,     0, 10463,  1889,    16,    84,  1850,  1421,     6,   150,
+         29881,  1889,    16,  5389,   634,    10,   455,    12,  8407, 33183,
+         11303,  2103,     4,   274,  5683,   347,  9524,     5,  2373,   819,
+           775,    81,    70, 10437, 12758,     4,  8837,   791,   306, 21109,
+            34,   357,   819,    87,   230, 12425,    15,   237,  5437, 42532,
+             4, 29881,  1889,    64, 14874,     5,   275, 32143, 21109,  1421,
+            81,   144, 12758,    19,   129,  1191,   207,     9,     5,   819,
+           872,     4,     2]])
+LSAN is our proposed model, while LSAN is trained using a full-sized embedding table. FPMC receives the worst performance results over all evaluation metrics. GRU4Rec has better performance than Caser on four benchmark datasets. LSAN can surpass the best SASRec model over most metrics with only 60% of the performance loss.
+tensor([[    0, 41836,   132,    35, 37070,    15, 29698,  6492,  8611,     8,
+          1421, 10070,     4,    96,   349,  3236,     6,     5,   275,     8,
+           200,   275,   775,    32,  6263,    11,  7457,  9021,     8,   223,
+         17422,     6,  4067,     4,    20, 43797,  1836,     9,   349,  1421,
+            16,  4756,    77,  1437, 40756, 16948, 18400,  5214, 21540,     4,
+           274,  5683,   347,  8837,   791,   306, 21109,   230, 12425, 32143,
+         21109,   163, 18854,   306, 21109, 29881,  1889,     4,     2]])
+Table 2: Comparison on sequential recommendation accuracy and model sizes. In each row, the best and second best results are highlighted in boldface and underlined, respectively. The parameter size of each model is obtained when 𝐷=128. FPMC GRU4Rec Caser SASRec BERT4Rec LSAN.
+tensor([[    0, 10463,  1889,  9524,     5,   275,   819,    19,    10,   112,
+            12, 39165,  9437,     4,   166,    67, 14095,    14,     5,  1421,
+           819,  9305,  3334,    77,    55,  9544,    12,  2611, 19774,  4477,
+            12,   268,    32, 19030,    15,    70, 41616,     4,   152,   189,
+            28,   142,     9,     5,    81,    12, 22605,     4, 41045,    77,
+         29881,  1889,    16,  1660,    15,  2778, 28593, 42532,     4,     2]])
+LSAN receives the best performance with a 1-layer architecture. We also observe that the model performance drops obviously when more twin-attention lay-ers are stacked on all dataset. This may be because of the over-fitting.problem when LSAN is launched on extremely sparse datasets.
+tensor([[    0,   250,    92,  1503,  9599,  1459,   438,    12, 50249,    90,
+          2407,     6, 40878,     6,    16,  1850,    11,   646,   290,     6,
+          1749,  8174,  3139,  1049,   745,  1803,    16,    10,  3228,    12,
+          3628,  1403,    12,  2611, 19774, 10490,     4,   152,  2386,  3845,
+         12980, 44042,     8, 35499,   194,    12,  1116,    12,   627,    12,
+          2013,   819,    11,    10,  1810,  1186,     9, 26471,  8558,     4,
+            20,  1850, 29881,  1889,  2743, 13458,     5,  3783,   701,    31,
+             5, 33183, 11303,  2103,     4,     2]])
+A new attention architec-                ture, transformer, is proposed in [ 8,40]. Its main building block is a multi-head self-attention layer. This allows faster parallel computation and achieves state-of-the-art performance in a wide range of modelling tasks. The proposed LSAN largely reduces the memory cost from the embedding table.
+tensor([[    0,   133,   892,    16,   716,    15,    10,  2225,    30, 17922,
+         10136,     6,  3523,   329,  3592, 40290,     6,   248,  3371, 21114,
+             6,  3232,  1975, 35530, 29604, 19211,     6, 19608,    12,  4771,
+          4001, 34597,     6, 45088,  5991,     6,     8, 25689,  1116,  1097,
+         28279,     4,    20,  2225,    16,   373, 35798,   337,  7299, 19774,
+            12,   250, 10680, 47506,  7232,  5778,     4,    85,    21,  2633,
+            23,     5,  1718,   212, 44712,  1016,  2815,    15,  5423,  9466,
+             4,     2]])
+The study is based on a paper by Tong Chen, Hongzhi Yin, Rui Yan, Quoc Viet Hung Nguyen, Wen-Chih Peng, Xue Li, and Xiaofang Zhou. The paper is called Attentional Intention-Aware Recommender Systems. It was presented at the 35th IEEE International Conference on Data Engineering.
+tensor([[    0,   510, 11918, 10862, 35798,    19,  5737,  4301,     8, 29614,
+          2585, 13728, 15790,     4, 14644, 32896,    12,   805, 45288, 30505,
+         23794,   337,   289,  8141,    13,  1890, 16101, 25376,  4415,    12,
+         14377,   337,  9944,  1069, 28017,     4,  4130,  4937,    12,  1116,
+            12, 44468, 31684,  1258,    15, 47279,    12,  9157,  6031,  7153,
+          6698, 18205,     4,    96, 15584,   771,    44,    27,   844,    35,
+            20,  6494,  2815,  2760,     6, 41064, 24309,     6,  6951,     6,
+           587,   291,    12,  1978,     6,  2760,     4,     2]])
+Paying Less Attention with Lightweight and Dynamic Convolutions. Aggregation-basedGraph Convolutional Hashing for Unsupervised Cross-modal Retrieval. Next Point-of-Interest Recommendation onResource-Constrained Mobile Devices. In WWW ’20: The Web Conference 2020,Taipei, Taiwan, April 20-24, 2020.
